@@ -1,54 +1,40 @@
-#pragma once
-#include "buyer.h"
-#include "item.h"
+#ifndef SELLER_H
+#define SELLER_H
+
 #include <string>
+#include "bankCust.h"
+#include "item.h"
 #include <vector>
 
-class seller : public Buyer {
+using namespace std;
 
-private:
-    // Add seller-specific private members here
-    int sellerId;
-    std::string sellerName;
-    bool idDisplayed(int itemId) const {
-        // Example implementation, can be customized
-        return itemId > 0; // Assuming valid IDs are positive integers
+class Seller {
+    private:
+        int id;
+        string name;
+        int bankCustId;
+        bankCustomer &account; // Reference to a bankCustomer object
+        vector<Item> stock;
+
+    public:
+
+    Seller(int sellerId, const string &sellerName, bankCustomer &account) : id(sellerId), name(sellerName), account(account), bankCustId(account.getId()){};
+
+    int getId() const { return id; }
+    string getName() const { return name; }
+    int getBankCustId() const { return bankCustId; }
+
+    string getAccInfo() const {
+        return account.getName() + " (" + to_string(account.getId()) + ")";
     }
 
-    vector<Item> items; // Assuming seller has a collection of items
-
-
-public:
-    seller() = default;
-
-    seller(Buyer buyer, int sellerId, const std::string& sellerName)
-        : Buyer(buyer.getId(), buyer.getName(), buyer.getAccount()), sellerId(sellerId), sellerName(sellerName) {
-            Buyer::setId(buyer.getId());
-        }
-
-    virtual ~seller() = default;
-
-    void addNewItem(int newId, const std::string& newName, int newQuantity, double newPrice) {
-        Item newItem(newId, newName, newQuantity, newPrice);
-        items.push_back(newItem);
+    void addItem(const Item &item) {
+        stock.push_back(item);
     }
 
-    void updateItem(int itemId, const std::string& newName, int newQuantity, double newPrice) {
-        for (auto& item : items) {
-            if (item.getId() == itemId) {
-                item.alterItemById(itemId, newName, newQuantity, newPrice); // Assuming alterItemById is a method
-            }
-        }
+    const vector<Item>& getStock() const {
+        return stock;
     }
-
-    void makeItemVisibleToCustomer(int itemId) {
-        for (auto& item : items) {
-            if (item.getId() == itemId) {
-                item.setDisplay(true); // Assuming setDisplay is a method in Item class
-                break;
-            }
-        }
-    }
-
-    // Add seller-specific members here
 };
+
+#endif // SELLER_H
