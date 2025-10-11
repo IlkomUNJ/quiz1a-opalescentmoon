@@ -3,7 +3,7 @@
 
 #include <cstddef>
 #include <string>
-#include "bank_customer.h"
+#include "bankCust.h"
 
 using namespace std;
 
@@ -11,15 +11,15 @@ class Buyer {
 private:
     int id;
     string name;
-    BankCustomer &account; // Association with BankCustomer
+    bankCustomer &account; // Association with BankCustomer
 
 public:
-    Buyer(int id, const string& name, BankCustomer &account0)
+    Buyer(int id, const string& name, bankCustomer &account0)
         : id(id), name(name), account(account0) {}
 
     int getId() const { return id; }
     string getName() const { return name; }
-    BankCustomer& getAccount() { return account; }
+    bankCustomer& getAccount() { return account; }
 
     void setId(int newId) { id = newId; }
     void setName(const std::string& newName) { name = newName; }

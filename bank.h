@@ -1,11 +1,11 @@
-#include "bank_customer.h"
+#include "bankCust.h"
 #include <iostream>
 #include <vector>
 
 class Bank{
 private:
     string name;
-    vector<BankCustomer> Accounts{};
+    vector<bankCustomer> Accounts{};
     int customerCount;
 
 public:
